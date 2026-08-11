@@ -4,7 +4,7 @@ Examples
 --------
     pathconv "\\\\server\\share\\dir\\file"   # auto-detect, mapping ON
     pathconv --no-map "C:\\a\\b"               # separators only
-    pathconv --to-windows "/shsv/MobAP2/x"     # force direction
+    pathconv --to-windows "/mnt/project/x"     # force direction
     pathconv --config ./my.json ...
     pathconv --list                            # print current mappings
     echo "C:\\a\\b" | pathconv                 # read from stdin

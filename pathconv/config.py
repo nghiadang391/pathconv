@@ -14,8 +14,8 @@ ENV_VAR = "PATHCONV_CONFIG"
 # Seeded on first run so the tool is useful out of the box.
 DEFAULT_MAPPINGS: List[Mapping] = [
     Mapping(
-        windows_prefix=r"\\rvc-vnas-01.rvc.renesas.com\MobAP2",
-        unix_prefix="/shsv/MobAP2",
+        windows_prefix=r"\\fileserver01.example.com\Project",
+        unix_prefix="/mnt/project",
     ),
 ]
 
