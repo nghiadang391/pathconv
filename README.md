@@ -20,19 +20,31 @@ mechanics but can't rewrite an arbitrary share root to a mount point, e.g.:
 The prefix mapping is toggleable: turn it **off** and only separators are
 swapped.
 
+## Install
+
+```bash
+pip install -e .
+```
+
+This registers two commands, `pathconv` and `pathconv-gui`. Without
+installing, you can still run everything via `python -m pathconv.cli` /
+`python -m pathconv.gui`.
+
 ## CLI
 
 ```bash
-python -m pathconv.cli "\\rvc-vnas-01.rvc.renesas.com\MobAP2\prj_RCAR_MBD\x"
+pathconv "\\rvc-vnas-01.rvc.renesas.com\MobAP2\prj_RCAR_MBD\x"
 # -> /shsv/MobAP2/prj_RCAR_MBD/x
 
-python -m pathconv.cli --to-windows "/shsv/MobAP2/prj_RCAR_MBD/x"
+pathconv --to-windows "/shsv/MobAP2/prj_RCAR_MBD/x"
 # -> \\rvc-vnas-01.rvc.renesas.com\MobAP2\prj_RCAR_MBD\x
 
-python -m pathconv.cli --no-map "C:\a\b\c"   # -> C:/a/b/c  (separators only)
-python -m pathconv.cli --list                # show configured mappings
-echo "C:\a\b" | python -m pathconv.cli       # reads stdin, one path per line
+pathconv --no-map "C:\a\b\c"   # -> C:/a/b/c  (separators only)
+pathconv --list                # show configured mappings
+echo "C:\a\b" | pathconv       # reads stdin, one path per line
 ```
+
+(Not installed? Replace `pathconv` with `python -m pathconv.cli`.)
 
 Direction is auto-detected (a `\`, drive letter, or `\\` means Windows input);
 force it with `--to-unix` / `--to-windows`.
@@ -40,7 +52,8 @@ force it with `--to-unix` / `--to-windows`.
 ## GUI
 
 ```bash
-python -m pathconv.gui
+pathconv-gui
+# or, without installing: python -m pathconv.gui
 ```
 
 - Input/output boxes with live conversion as you type.
@@ -73,5 +86,5 @@ wins.
 ## Tests
 
 ```bash
-python -m unittest discover -s path_converter/tests
+python -m unittest discover -s tests
 ```
