@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pathconv"
+version = "0.1.0"
+description = "Windows <-> Unix path converter with configurable prefix mapping."
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.scripts]
+pathconv = "pathconv.cli:main"
+pathconv-gui = "pathconv.gui:main"
+
+[tool.setuptools]
+packages = ["pathconv"]
