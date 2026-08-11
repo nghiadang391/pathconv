@@ -104,7 +104,7 @@ class ConverterApp(tk.Tk):
 
         tk.Label(self, text="Input path(s):").grid(row=0, column=0, sticky="w", **pad)
         self.input = tk.Text(self, width=72, height=5)
-        self.input.grid(row=1, column=0, columnspan=4, **pad)
+        self.input.grid(row=1, column=0, columnspan=4, sticky="nsew", **pad)
 
         # Options row.
         self.use_mapping = tk.BooleanVar(value=True)
@@ -134,12 +134,18 @@ class ConverterApp(tk.Tk):
 
         tk.Label(self, text="Result:").grid(row=4, column=0, sticky="w", **pad)
         self.output = tk.Text(self, width=72, height=5, state="disabled")
-        self.output.grid(row=5, column=0, columnspan=4, **pad)
+        self.output.grid(row=5, column=0, columnspan=4, sticky="nsew", **pad)
 
         cfg = resolve_config_path(config_path)
         tk.Label(self, text=f"config: {cfg}", fg="gray").grid(
             row=6, column=0, columnspan=4, sticky="w", **pad
         )
+
+        # Let the text boxes grow/shrink with the window; other rows stay fixed.
+        self.rowconfigure(1, weight=1)
+        self.rowconfigure(5, weight=1)
+        for col in range(4):
+            self.columnconfigure(col, weight=1)
 
         # Live conversion as the user types.
         self.input.bind("<KeyRelease>", lambda _e: self.convert())
