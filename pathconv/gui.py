@@ -147,8 +147,17 @@ class ConverterApp(tk.Tk):
         for col in range(4):
             self.columnconfigure(col, weight=1)
 
-        # Live conversion as the user types.
-        self.input.bind("<KeyRelease>", lambda _e: self.convert())
+        # Live conversion as the user types, debounced so we don't recompute
+        # and redraw the output widget on every single keystroke.
+        self._convert_job = None
+        self.input.bind("<KeyRelease>", self._schedule_convert)
+
+    def _schedule_convert(self, _event=None) -> None:
+        # Coalesce rapid keystrokes: cancel any pending job and run once the
+        # user pauses briefly (~150ms).
+        if self._convert_job is not None:
+            self.after_cancel(self._convert_job)
+        self._convert_job = self.after(150, self.convert)
 
     def _direction_arg(self):
         val = self.direction.get()
@@ -166,9 +175,15 @@ class ConverterApp(tk.Tk):
             )
             for line in lines
         ]
+        new_text = "\n".join(results)
+        # Skip the (relatively expensive) state-toggle + full rewrite when the
+        # result hasn't actually changed — avoids needless widget redraws.
+        current = self.output.get("1.0", tk.END).rstrip("\n")
+        if new_text == current:
+            return
         self.output.config(state="normal")
         self.output.delete("1.0", tk.END)
-        self.output.insert("1.0", "\n".join(results))
+        self.output.insert("1.0", new_text)
         self.output.config(state="disabled")
 
     def copy_result(self) -> None:
