@@ -13,8 +13,8 @@ Standard tools (`cygpath`, `wslpath`, `pathlib`) handle separators and UNC
 mechanics but can't rewrite an arbitrary share root to a mount point, e.g.:
 
 ```
-\\rvc-vnas-01.rvc.renesas.com\MobAP2\prj_RCAR_MBD\...   (Windows)
-/shsv/MobAP2/prj_RCAR_MBD/...                            (Ubuntu)
+\\fileserver01.example.com\Project\prj_example\...   (Windows)
+/mnt/project/prj_example/...                            (Ubuntu)
 ```
 
 The prefix mapping is toggleable: turn it **off** and only separators are
@@ -33,11 +33,11 @@ installing, you can still run everything via `python -m pathconv.cli` /
 ## CLI
 
 ```bash
-pathconv "\\rvc-vnas-01.rvc.renesas.com\MobAP2\prj_RCAR_MBD\x"
-# -> /shsv/MobAP2/prj_RCAR_MBD/x
+pathconv "\\fileserver01.example.com\Project\prj_example\x"
+# -> /mnt/project/prj_example/x
 
-pathconv --to-windows "/shsv/MobAP2/prj_RCAR_MBD/x"
-# -> \\rvc-vnas-01.rvc.renesas.com\MobAP2\prj_RCAR_MBD\x
+pathconv --to-windows "/mnt/project/prj_example/x"
+# -> \\fileserver01.example.com\Project\prj_example\x
 
 pathconv --no-map "C:\a\b\c"   # -> C:/a/b/c  (separators only)
 pathconv --list                # show configured mappings
@@ -73,8 +73,8 @@ Mappings live in a JSON file shared by the CLI and GUI:
 {
   "mappings": [
     {
-      "windows_prefix": "\\\\rvc-vnas-01.rvc.renesas.com\\MobAP2",
-      "unix_prefix": "/shsv/MobAP2"
+      "windows_prefix": "\\\\fileserver01.example.com\\Project",
+      "unix_prefix": "/mnt/project"
     }
   ]
 }

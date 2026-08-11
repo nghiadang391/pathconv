@@ -24,8 +24,8 @@ class Mapping:
     """A single prefix-mapping pair.
 
     ``windows_prefix`` is the network-share/drive root as seen on Windows
-    (e.g. ``\\\\rvc-vnas-01.rvc.renesas.com\\MobAP2``) and ``unix_prefix`` is
-    the equivalent mount point on Unix (e.g. ``/shsv/MobAP2``). Neither is
+    (e.g. ``\\\\fileserver01.example.com\\Project``) and ``unix_prefix`` is
+    the equivalent mount point on Unix (e.g. ``/mnt/project``). Neither is
     expected to end with a separator.
     """
 

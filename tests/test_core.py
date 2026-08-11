@@ -16,18 +16,18 @@ from pathconv.core import (  # noqa: E402
 
 MAP = [
     Mapping(
-        windows_prefix=r"\\rvc-vnas-01.rvc.renesas.com\MobAP2",
-        unix_prefix="/shsv/MobAP2",
+        windows_prefix=r"\\fileserver01.example.com\Project",
+        unix_prefix="/mnt/project",
     )
 ]
 
 WIN = (
-    "\\\\rvc-vnas-01.rvc.renesas.com\\MobAP2\\prj_RCAR_MBD\\05_from_rvc"
-    "\\260810_VPF_CMN_X5Hv1_X5Hv2_AIACC_X5L_IMR_Release\\"
+    "\\\\fileserver01.example.com\\Project\\prj_example\\05_from_vendor"
+    "\\260810_EXAMPLE_Release\\"
 )
 UNIX = (
-    "/shsv/MobAP2/prj_RCAR_MBD/05_from_rvc/"
-    "260810_VPF_CMN_X5Hv1_X5Hv2_AIACC_X5L_IMR_Release/"
+    "/mnt/project/prj_example/05_from_vendor/"
+    "260810_EXAMPLE_Release/"
 )
 
 
@@ -42,7 +42,7 @@ class DirectionTests(unittest.TestCase):
         self.assertEqual(detect_direction(r"a\b"), TO_UNIX)
 
     def test_slash_is_to_windows(self):
-        self.assertEqual(detect_direction("/shsv/MobAP2"), TO_WINDOWS)
+        self.assertEqual(detect_direction("/mnt/project"), TO_WINDOWS)
 
 
 class MappingTests(unittest.TestCase):
@@ -54,20 +54,20 @@ class MappingTests(unittest.TestCase):
 
     def test_no_trailing_slash_preserved(self):
         self.assertEqual(
-            convert(r"\\rvc-vnas-01.rvc.renesas.com\MobAP2\a\b", MAP),
-            "/shsv/MobAP2/a/b",
+            convert(r"\\fileserver01.example.com\Project\a\b", MAP),
+            "/mnt/project/a/b",
         )
 
     def test_prefix_only(self):
         self.assertEqual(
-            convert(r"\\rvc-vnas-01.rvc.renesas.com\MobAP2", MAP),
-            "/shsv/MobAP2",
+            convert(r"\\fileserver01.example.com\Project", MAP),
+            "/mnt/project",
         )
 
     def test_case_insensitive_windows_prefix(self):
         self.assertEqual(
-            convert(r"\\RVC-VNAS-01.RVC.renesas.com\MobAP2\a", MAP),
-            "/shsv/MobAP2/a",
+            convert(r"\\FILESERVER01.EXAMPLE.com\Project\a", MAP),
+            "/mnt/project/a",
         )
 
     def test_longest_prefix_wins(self):
@@ -95,8 +95,8 @@ class FallbackTests(unittest.TestCase):
     def test_forced_direction_overrides_detection(self):
         # No backslash, but force to_unix should be a no-op swap.
         self.assertEqual(
-            convert("/shsv/MobAP2/a", MAP, direction=TO_UNIX, use_mapping=False),
-            "/shsv/MobAP2/a",
+            convert("/mnt/project/a", MAP, direction=TO_UNIX, use_mapping=False),
+            "/mnt/project/a",
         )
 
     def test_empty_string(self):
