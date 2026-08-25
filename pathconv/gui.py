@@ -185,10 +185,16 @@ class ConverterApp(tk.Tk):
         self.output.delete("1.0", tk.END)
         self.output.insert("1.0", new_text)
         self.output.config(state="disabled")
+        # Implicitly copy the fresh result so it's ready to paste. The Copy
+        # button below stays available to re-copy on demand.
+        self._copy_to_clipboard(new_text)
+
+    def _copy_to_clipboard(self, text: str) -> None:
+        self.clipboard_clear()
+        self.clipboard_append(text)
 
     def copy_result(self) -> None:
-        self.clipboard_clear()
-        self.clipboard_append(self.output.get("1.0", tk.END).rstrip("\n"))
+        self._copy_to_clipboard(self.output.get("1.0", tk.END).rstrip("\n"))
 
     def edit_mappings(self) -> None:
         MappingEditor(self, self.mappings)
