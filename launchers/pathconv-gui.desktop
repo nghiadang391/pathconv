@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Path Converter
+Comment=Convert file paths between Windows and Unix conventions
+Exec=pathconv-gui
+Terminal=false
+Categories=Utility;

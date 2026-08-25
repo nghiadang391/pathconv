@@ -22,13 +22,41 @@ swapped.
 
 ## Install
 
+The simplest install is [pipx](https://pipx.pypa.io), which puts the commands
+on your PATH in an isolated environment:
+
 ```bash
-pip install -e .
+pipx install pathconv
 ```
 
-This registers two commands, `pathconv` and `pathconv-gui`. Without
-installing, you can still run everything via `python -m pathconv.cli` /
-`python -m pathconv.gui`.
+Don't have pipx yet? Install it once (using an explicit `python3` avoids any
+`pip`/`pip3` ambiguity):
+
+```bash
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+```
+
+Plain `pip` works too (`pip install pathconv`), and for local development use
+`pip install -e .`. Either way you get two commands, `pathconv` (CLI) and
+`pathconv-gui` (GUI). Without installing, you can still run everything via
+`python -m pathconv.cli` / `python -m pathconv.gui`.
+
+## Double-click launch (GUI)
+
+To open the GUI by double-clicking instead of typing a command, use the files
+in [`launchers/`](launchers):
+
+- **Windows:** double-click `pathconv-gui.bat` (or `pathconv-gui.pyw` for no
+  console window). Right-click either → *Send to → Desktop (create shortcut)*
+  for a desktop icon. This assumes Python + pathconv are installed.
+- **Linux:** copy `pathconv-gui.desktop` into `~/.local/share/applications/`
+  (and/or `~/Desktop/`) so it appears in your app menu and is double-clickable
+  in the file manager. It runs the installed `pathconv-gui` command.
+
+The GUI needs Tkinter. It ships with the python.org installers and on Windows,
+but some Linux distros package it separately (e.g. `sudo apt install
+python3-tk`).
 
 ## CLI
 
