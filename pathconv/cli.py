@@ -2,12 +2,12 @@
 
 Examples
 --------
-    pathconv "\\\\server\\share\\dir\\file"   # auto-detect, mapping ON
-    pathconv --no-map "C:\\a\\b"               # separators only
-    pathconv --to-windows "/mnt/project/x"     # force direction
-    pathconv --config ./my.json ...
-    pathconv --list                            # print current mappings
-    echo "C:\\a\\b" | pathconv                 # read from stdin
+    pathconv-cli "\\\\server\\share\\dir\\file"   # auto-detect, mapping ON
+    pathconv-cli --no-map "C:\\a\\b"               # separators only
+    pathconv-cli --to-windows "/mnt/project/x"     # force direction
+    pathconv-cli --config ./my.json ...
+    pathconv-cli --list                            # print current mappings
+    echo "C:\\a\\b" | pathconv-cli                 # read from stdin
 """
 
 from __future__ import annotations

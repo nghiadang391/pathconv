@@ -14,43 +14,45 @@ Tkinter, no dependencies, runs on Windows and Linux.
 
 ## Install
 
-```bash
-pipx install pathconv
-```
-
-No pipx? Install it once — the `python3 -m` form avoids `pip`/`pip3`
-ambiguity:
+Requires Python 3.8+. Install straight from GitHub with
+[pipx](https://pipx.pypa.io) (isolated, puts the commands on your PATH):
 
 ```bash
-python3 -m pip install --user pipx
-python3 -m pipx ensurepath
+pipx install git+https://github.com/nghiadang391/pathconv.git
 ```
 
-`pip install pathconv` also works (`pip install -e .` for development). Either
-way you get two commands: `pathconv` (CLI) and `pathconv-gui` (GUI). Or skip
-installing and run `python -m pathconv.cli` / `python -m pathconv.gui`.
+Or with plain pip:
 
-## Double-click the GUI
+```bash
+pip install git+https://github.com/nghiadang391/pathconv.git
+```
 
-Launchers live in [`launchers/`](launchers):
+From a local clone (for development or offline install):
 
-- **Windows:** double-click `pathconv-gui.bat` (or `pathconv-gui.pyw` for no
-  console window). Right-click → *Send to → Desktop* for an icon.
-- **Linux:** copy `pathconv-gui.desktop` into
-  `~/.local/share/applications/` (or `~/Desktop/`).
+```bash
+git clone https://github.com/nghiadang391/pathconv.git
+cd pathconv
+pip install .          # or: pip install -e .  (editable, for development)
+```
 
-Both need Python + pathconv installed. The GUI also needs Tkinter — bundled on
-Windows and python.org builds, but `sudo apt install python3-tk` on some
-distros.
+Either way you get two commands: `pathconv-cli` (CLI) and `pathconv` (GUI).
+
+Don't have pipx? Install it once, then reopen your terminal (use `python3` on
+Linux/macOS, `python` on Windows):
+
+```bash
+python -m pip install --user pipx
+python -m pipx ensurepath
+```
 
 ## CLI
 
 ```bash
-pathconv "\\fileserver01.example.com\Project\x"   # -> /mnt/project/x
-pathconv --to-windows "/mnt/project/x"            # force direction
-pathconv --no-map "C:\a\b\c"                      # separators only -> C:/a/b/c
-pathconv --list                                   # show mappings
-echo "C:\a\b" | pathconv                          # one path per line from stdin
+pathconv-cli "\\fileserver01.example.com\Project\x"   # -> /mnt/project/x
+pathconv-cli --to-windows "/mnt/project/x"            # force direction
+pathconv-cli --no-map "C:\a\b\c"                      # separators only -> C:/a/b/c
+pathconv-cli --list                                   # show mappings
+echo "C:\a\b" | pathconv-cli                          # one path per line from stdin
 ```
 
 Direction auto-detects (`\`, a drive letter, or `\\` means Windows input);
@@ -59,9 +61,16 @@ force it with `--to-unix` / `--to-windows`. Not installed? Use
 
 ## GUI
 
-Input/output boxes with live conversion (result auto-copied to the clipboard),
-an "Apply directory mapping" toggle, Auto / → Unix / → Windows direction, and
-"Edit mappings…" to manage share↔mount pairs.
+Once installed, run `pathconv` — or double-click a launcher in
+[`launchers/`](launchers): `pathconv-gui.bat` (Windows, no console window) or
+`pathconv-gui.sh` (Linux; `chmod +x` it first). On Windows, right-click the
+`.bat` → *Send to → Desktop (create shortcut)* for a desktop icon.
+
+The window has input/output boxes with live conversion (result auto-copied to
+the clipboard), an "Apply directory mapping" toggle, Auto / → Unix / → Windows
+direction, and "Edit mappings…" for share↔mount pairs. Needs Tkinter — bundled
+on Windows and python.org builds; `sudo apt install python3-tk` on some Linux
+distros.
 
 ## Configuration
 

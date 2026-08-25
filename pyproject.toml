@@ -11,8 +11,10 @@ license = "MIT"
 requires-python = ">=3.8"
 
 [project.scripts]
-pathconv = "pathconv.cli:main"
-pathconv-gui = "pathconv.gui:main"
+pathconv-cli = "pathconv.cli:main"
+
+[project.gui-scripts]
+pathconv = "pathconv.gui:main"
 
 [tool.setuptools]
 packages = ["pathconv"]
