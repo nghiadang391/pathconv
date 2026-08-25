@@ -27,6 +27,9 @@ then reopen your terminal. Or skip it and use plain pip:
 pip install git+https://github.com/nghiadang391/pathconv.git
 ```
 
+If pip warns the scripts aren't on `PATH`, you may need to add `~/.local/bin`
+to it.
+
 Working from a clone instead:
 
 ```bash
